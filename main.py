@@ -1,12 +1,16 @@
 from fastapi import FastAPI, Request, Form, Depends
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
-from fastapi_project.database import *
-from fastapi_project.templating import TemplateResponse
+from database import *
+from templating import TemplateResponse
 import hashlib
+from starlette.templating import Jinja2Templates
 
 Base.metadata.create_all(bind= engine)
 app = FastAPI()
+
+templates = Jinja2Templates(directory='templates')
+TemplateResponse = templates.TemplateResponse
 
 def get_db():
     db = SessionLocal()
